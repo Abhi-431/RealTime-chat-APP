@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Leftside from '../componant/Leftside'
+import Leftside from '../componant/Sidebox'
 import Chatcontainer from '../componant/Chatcontainer'
-import Rightside from '../componant/Rightside'
+import Rightside from '../componant/Rightbox'
 
 const Homepage = () => {
     const [selectedUser,setSelectedUser]=useState(false)

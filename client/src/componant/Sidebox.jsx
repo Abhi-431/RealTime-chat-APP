@@ -2,7 +2,7 @@ import React from 'react'
 import assets,{userDummyData} from '../assets/assets'
 import { useNavigate } from 'react-router-dom'
 
-const Leftside = ({selectedUser,setSelectedUser}) => {
+const Sidebox = ({selectedUser,setSelectedUser}) => {
     const navigate=useNavigate()
   return (
     <div className={`bg-[#8185B2]/10  h-full p-5 rounded-r-xl overflow-y-scroll text-white
@@ -55,4 +55,4 @@ const Leftside = ({selectedUser,setSelectedUser}) => {
   )
 }
 
-export default Leftside
+export default Sidebox 
