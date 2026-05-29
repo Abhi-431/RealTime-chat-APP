@@ -33,7 +33,7 @@ const Profilepage = () => {
            rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' />
            <textarea onChange={(e)=>setBio(e.target.value)} name="" placeholder=' Write profile bio' required className='p-2 border border-gray-500 
            rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 ' rows={4}  id=""></textarea>
-           <button type='submit' className='bg-gradient-to-r from-purple-500 to-violet-600
+           <button type='submit' className=' bg-gradient-to-r from-purple-400 to-violet-600
            text-white p-2 rounded-full text-lg cursor-pointer '>Save</button>
         </form>
         <img src={assets.logo_icon} className='max-w-44 aspect-square rounded-full
