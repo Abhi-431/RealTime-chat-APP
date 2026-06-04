@@ -63,7 +63,7 @@ if (!avatar?.url) {
 
    })
 
-   const logoutUser=AsyncHandler(async (req,res) => {
+   const loginUser=AsyncHandler(async (req,res) => {
     const {email,username,password} =req.body
     if(!username && !email){
         throw new ApiError(401,"Username or Email is required");
@@ -117,6 +117,34 @@ if (!avatar?.url) {
         throw new ApiError(401,"Invalid token");
     }
    })
+   const logoutUser=AsyncHandler(async(req,res)=>{
+   await User.findByIdAndUpdate(req.user?._id,
+        {
+            $unset:{
+                refreshToken:1
+                    }
+            },{new:true}
+    )
+    const options={
+        httpOnly:true,
+        secure:true
+    }
+    return res
+    .status(200)
+    .json(new ApiResponse(200,{},"User Logout SucessFully "))
+   })
+
+
+//Update user details
+
+   const updateUserDetails=AsyncHandler(async(req,res)=>{
+    const {username,fullName,bio}=req.body
+    if([username,fullName,bio].some((field)=>field.trim()="")){
+        throw new ApiError(401,"All fields are required ");
+    }
+   })
+
+
    export
    {
     signUpUser,

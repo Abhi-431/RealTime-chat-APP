@@ -7,7 +7,7 @@ const Profilepage = () => {
   const navigate=useNavigate()
   const [name ,setName]=useState("Charles Martin")
   const [bio,setBio]=useState("Hi Everyone, this is my Bio")
-
+  const [username ,setUsername]=useState("")
   const handelSubmit=async(e)=>{
     e.preventDefault();
     navigate('/')
@@ -30,6 +30,8 @@ const Profilepage = () => {
               upload profile Image 
            </label>
            <input  onChange={(e)=>setName(e.target.value)} value={name}type="text" required placeholder='Your Name ' className='p-2 border border-gray-500 
+           rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' />
+            <input  onChange={(e)=>setusername(e.target.value)} value={username}type="text" required placeholder='Usename' className='p-2 border border-gray-500 
            rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500' />
            <textarea onChange={(e)=>setBio(e.target.value)} name="" placeholder=' Write profile bio' required className='p-2 border border-gray-500 
            rounded-md focus:outline-none focus:ring-2 focus:ring-violet-500 ' rows={4}  id=""></textarea>
