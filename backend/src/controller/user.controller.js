@@ -138,12 +138,72 @@ if (!avatar?.url) {
 //Update user details
 
    const updateUserDetails=AsyncHandler(async(req,res)=>{
-    const {username,fullName,bio}=req.body
-    if([username,fullName,bio].some((field)=>field.trim()="")){
+    const {fullName,bio}=req.body
+    if([fullName,bio].some((field)=>field.trim()==="")){
         throw new ApiError(401,"All fields are required ");
     }
+    if (!mongoose.Types.ObjectId.isValid(req.user?._id)) {
+       throw new ApiError(400, "Invalid user ID format");
+}
+
+    const updatedUser=await User.findByIdAndUpdate(user,
+        {
+           $set :{
+            fullName:this.fullName,
+            bio:this.bio
+           }
+        },{new :true}
+    )
+    if(!updatedUser){
+        throw new ApiError(500,"Failed to update user details ");
+    }
+    return res
+    .status(200)
+    .json(new ApiResponse(200,updatedUser,"User Updated successfully"))
    })
 
+   const updateavatar=AsyncHandler(async (req,res) => {
+    const avatarLocalPath=req.file?.path
+    if(!avatarLocalPath){
+        throw new ApiError(404,"Image not found");
+        
+    }
+    const avatar=await uploadOnCloudiinary(avatarLocalPath)
+    if(!avatar.url){
+        throw new ApiError(401,"Failed to upload ")
+    }
+    const user=await User.findByIdAndUpdate(req.user?._id,
+        {
+            $set:{
+                avatar:avatar.url
+            }
+        },{new:true}
+    )
+    return res
+    .status(200)
+    .json(new ApiResponse(200,user,"Avatar changed successfully "))
+   })
+
+
+   //Change password 
+   const changePassword=AsyncHandler(async (req,res) => {
+    const {oldPassword,newPassword}=req.body
+    const user= await User.findById(req.user?._id)
+    const isPasswordCorrect= await user.isPasswordCorrect(oldPassword)
+    if(!isPasswordCorrect){
+        throw new ApiError(401,"Incorrect Password");
+    }
+    user.password=newPassword;
+    return res
+    .status(200)
+    .json(new ApiResponse(200,{},"password changed successfully"))
+   })
+//Change password 
+const getuser=AsyncHandler(async (req,res) => {
+    return res
+    .status(200)
+    .json(new ApiResponse(200,req.user,"Current user fetched Successfully"))
+}) 
 
    export
    {
@@ -151,4 +211,8 @@ if (!avatar?.url) {
     loginUser,
     refreshAccessToken,
     logoutUser,
+    loginUser,
+    updateUserDetails,
+    updateavatar,
+    changePassword
    }
