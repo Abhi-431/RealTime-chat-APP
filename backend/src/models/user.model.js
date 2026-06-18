@@ -7,7 +7,7 @@ const userSchema= new Schema(
     {
         username:{
             type:String,
-            require:true,
+            required:true,
             unique:true,
             lowercase: true,
             trim: true, 
@@ -15,20 +15,20 @@ const userSchema= new Schema(
         },
         email:{
             type:String,
-            require:true,
+            required:true,
             unique:true,lowercase: true,
             trim: true, 
             
         },
         fullName:{
             type:String,
-            require:true,
+            required:true,
             trim: true, 
             index: true
         },
         password:{
             type:String,
-            require:true,
+            required:true,
             minlength:6
         },
         avatar:{
@@ -59,7 +59,7 @@ userSchema.methods.getAccessToken=function () {
         _id:this._id,
         username:this.username,
         fullName:this.fullName,
-        email:this.ema
+        email:this.email
     },process.env.ACCESS_TOKEN_SECRET,
     {
         expiresIn:process.env.ACCESS_TOKEN_EXPIRY
