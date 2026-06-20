@@ -3,7 +3,7 @@ import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { AsyncHandler } from "../utils/AsyncHandler.js";
 import mongoose, { isValidObjectId } from "mongoose";
-
+import {User} from "../models/user.model.js"
 
 
 //=======================================================
@@ -144,7 +144,7 @@ const fetchAllChats=AsyncHandler(async (req,res) => {
 const removeGroupMember=AsyncHandler(async (req,res) => {
     const {chatId,userId} =req.body
 
-    if(!chatName || !userId){
+    if(!chatId || !userId){
         throw new ApiError(400,"ChatId and userId required");
     }
     const chat= await Chat.findById(chatId);
@@ -183,7 +183,7 @@ const removeGroupMember=AsyncHandler(async (req,res) => {
 
 const addGroupMember=AsyncHandler(async (req,res) => {
      const {chatId,userId} =req.body
-    if(!chatName || !userId){
+    if(!chatId || !userId){
         throw new ApiError(400,"ChatId and userId required");
     }
     const chat= await Chat.findById(chatId);
@@ -213,8 +213,10 @@ const addGroupMember=AsyncHandler(async (req,res) => {
         .populate("groupAdmin","-password")
         return res
         .status(200)
-        .json(new ApiResponse(200,updatedChat,"User Added successFully"))
+        .json(new ApiResponse(200,updateChat,"User Added successFully"))
 })
+
+
 export{
  accessOrCreateChat,
   fetchAllChats,
